@@ -1,3 +1,4 @@
+
 name: Build Android APK
 
 on:
@@ -22,12 +23,13 @@ jobs:
 
       - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
-      - run: |
-          unzip -q NammaConstructStoreAndroid_Project.zip -d extracted
-          cd extracted/NammaConstructStoreAndroid
+      - name: Extract and build APK
+        run: |
+          unzip -q NammaConstructStore_MobileBuild.zip -d extracted
+          cd extracted
           gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: Namma-Construct-Store-APK
-          path: extracted/NammaConstructStoreAndroid/app/build/outputs/apk/debug/app-debug.apk
+          path: extracted/app/build/outputs/apk/debug/app-debug.apk
